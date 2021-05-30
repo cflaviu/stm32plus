@@ -166,10 +166,10 @@ env.Append(CPPPATH=["#lib/include","#lib/include/stl","#lib"])
 
 # create the C and C++ flags that are needed. We can't use the extra or pedantic errors on the ST library code.
 
-env.Replace(CCFLAGS=["-Wall","-Werror","-Wno-implicit-fallthrough","-ffunction-sections","-fdata-sections","-fno-exceptions","-mthumb","-gdwarf-2","-pipe"])
-env.Replace(CXXFLAGS=["-Wextra","-pedantic-errors","-fno-rtti","-std=gnu++14","-fno-threadsafe-statics"])
+env.Replace(CCFLAGS=["-Wall","-Wno-implicit-fallthrough","-ffunction-sections","-fdata-sections","-fno-exceptions","-mthumb","-gdwarf-2","-pipe"])
+env.Replace(CXXFLAGS=["-Wextra","-pedantic-errors","-fno-rtti","-std=gnu++14","-fno-threadsafe-statics", "-Wno-cast-function-type"])
 env.Append(CCFLAGS="-D"+osc_def+"="+osc)
-env.Append(LINKFLAGS=["-Xlinker","--gc-sections","-mthumb","-g3","-gdwarf-2"])
+env.Append(LINKFLAGS=["-Xlinker","--gc-sections","-mthumb","-g3","-gdwarf-2","--specs=nosys.specs"])
 
 # add on the MCU-specific definitions
 
@@ -251,7 +251,7 @@ print("stm32plus build version is "+VERSION)
 systemprefix=mode+"-"+mcu+"-"+osc+osc_type
 if float:
   systemprefix += "-"+float
-  
+
 # launch SConscript for the main library
 
 libstm32plus=SConscript("lib/SConscript",
